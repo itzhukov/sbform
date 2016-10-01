@@ -10,25 +10,70 @@ export default class Form extends React.Component {
 			expToYear: '',
 			userName: '',
 			CCV: '',
-			isErrorForm: false
+			isErrorForm: false,
+			errors: []
 		}
 	}
 
-	confirmForm(event) {
-		console.log('-> confirmForm');
-
+	validateForm(event) {
 		event.preventDefault();
 		event.stopPropagation();
 
+		let errors = [];
+
+		if ( !this.actionValidateCardNumber() ) {
+			errors.push('— Вы ошиблись в реквизитах карты');
+			errors.push('— На карте нулевой балланс или она заблокирована.');
+			errors.push('Проверьте реквизиты или укажите данные другой карты.');
+		}
+
 		this.setState({
-			isErrorForm: !this.state.isErrorForm
+			isErrorForm: (errors.length) ? true : false,
+			errors: errors,
 		});
 
+	}
+
+	// Luhn Algorithm
+	actionValidateCardNumber() {
+		let cardNumber = this.state.cardNumber;
+
+		if (/[^0-9-\s]+/.test(cardNumber) || !cardNumber.length) return false;
+
+		var nCheck = 0, nDigit = 0, bEven = false;
+		cardNumber = cardNumber.replace(/\D/g, "");
+
+		for (var n = cardNumber.length - 1; n >= 0; n--) {
+			var cDigit = cardNumber.charAt(n),
+				nDigit = parseInt(cDigit, 10);
+
+			if (bEven) {
+				if ((nDigit *= 2) > 9) nDigit -= 9;
+			}
+
+			nCheck += nDigit;
+			bEven = !bEven;
+		}
+
+		return (nCheck % 10) == 0;
 	}
 
 	actionSetInputValue(event) {
 		let name = event.target.name;
 		let value = event.target.value;
+		let valueLen = value.length;
+
+		switch(name){
+			case 'cardNumber':
+				if (!/^[0-9-\s]{0,20}$/.test(value) || valueLen >= 20) {
+					return false;
+				}
+				break;
+			case 'expToMonth': break;
+			case 'expToYear': break;
+			case 'userName': break;
+			case 'CCV': break;
+		}
 
 		this.setState({
 			[name]: value
@@ -44,9 +89,11 @@ export default class Form extends React.Component {
 					?
 						<div className="Form-errors">
 							<div className="Form-error">Ошибка! Возможно:</div>
-							<div className="Form-error">— Вы ошиблись в реквизитах карты</div>
-							<div className="Form-error">— На карте нулевой балланс или она заблокирована.</div>
-							<div className="Form-error">Проверьте реквизиты или укажите данные другой карты.</div>
+							{
+								this.state.errors.map( (item, i) => {
+									return <div key={i} className="Form-error">{item}</div>
+								})
+							}
 						</div>
 					: null
 				}
@@ -125,7 +172,7 @@ export default class Form extends React.Component {
 							className="Form-input Form-input--ccv"/>
 
 						<div className="Form-hint">Три цифры с обратной стороны карты</div>
-						<button type="button" className="Form-button App-button App-button--blue" onClick={this.confirmForm.bind(this)}>
+						<button type="button" className="Form-button App-button App-button--blue" onClick={this.validateForm.bind(this)}>
 							Подтвердить
 						</button>
 					</div>
