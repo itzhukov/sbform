@@ -1,0 +1,35 @@
+body
+	font-family: "PT Sans"
+
+.App
+	.App-button
+		position: relative
+		padding: 8px 5px
+		border-radius: 3px
+		outline: none
+		border: none
+		text-align: center
+		font-size: 13px
+		background: none
+		min-width: 140px
+		letter-spacing: 0.02em
+		cursor: pointer
+		transition: background 150ms ease-out
+
+		&.App-button--blue
+			background: #4786cd
+			color: #fff
+			&:hover
+				background: #3786de
+
+		&.App-button--green
+			background: #79bf62
+			color: #fff
+			&:hover
+				background: #6ed04d
+
+	.App-button-openModal
+		margin: 0 auto
+		display: block
+		width: 230px
+

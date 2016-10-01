@@ -4,7 +4,7 @@ var webpack = require('webpack-stream');
 var webpackConfig = require('./webpack.config.js');
 var del = require('del');
 var runSequence = require('run-sequence');
-var path = require('path');
+//var path = require('path');
 var colors = require('colors');
 
 function exceptionLog (error) {
@@ -19,14 +19,11 @@ gulp.task('webpack', function() {
 	gulp.src('./assets/js/main.js')
 		.pipe( webpack( require('./webpack.config.js') )
 		.on('error', exceptionLog) )
-		
 		.on('end', function() {
 			console.log( ('-------- Finished webpack ---------').bold.green.bgBlack.inverse );
 			console.log( ('------ build time: ' + (new Date() - webpackTime)/1000 + ' sec ------' ).bold.yellow );
 		})
 		.pipe(gulp.dest('./public/js/'))
-	
-
 });
 
 // Сборка sass
@@ -62,5 +59,4 @@ gulp.task('default', function () {
 	runSequence('del-build', ['webpack', 'sass'])
 	gulp.watch(['./assets/js/**/*.js', './assets/js/**/*.jsx', './webpack.config.js'], ['webpack']);
 	gulp.watch('./assets/sass/**/*.sass', ['sass']);
-	gulp.watch('./public/landing/sass/*.sass', ['landing'])
 });

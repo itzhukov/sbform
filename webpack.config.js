@@ -1,6 +1,5 @@
 var webpack = require('webpack');
 var path = require('path');
-var CompressionPlugin = require("compression-webpack-plugin");
 var colors = require('colors');
 var oldperc = 0;
 
@@ -11,7 +10,7 @@ var config = {
 	// devtool: 'cheap-source-map', // A SourceMap without column-mappings. SourceMaps from loaders are not used.
 	// devtool: 'cheap-module-source-map', // A SourceMap without column-mappings. SourceMaps from loaders are simplified to a single mapping per line.
 	entry: {
-		build: ['babel-polyfill', './assets/js/main.js'],
+		build: ['babel-polyfill', './assets/js/index.jsx'],
 	},
 	target: 'web',
 	watchOptions: {
@@ -31,7 +30,7 @@ var config = {
 			path.resolve(__dirname, 'assets/'),
 		],
 		alias: {
-			'first': 'js/modules/first'
+			'Form': 'js/modules/Form'
 		}
 	},
 	externals: {
@@ -62,7 +61,7 @@ var config = {
 				test: /\.(js|jsx)$/,
 				loader: 'babel',
 				include: [
-					path.resolve(__dirname, 'assets/js/modules/'),
+					path.resolve(__dirname, 'assets/js/'),
 				],
 				plugins: [
 					'transform-runtime',
@@ -99,13 +98,6 @@ var config = {
 		new webpack.optimize.MinChunkSizePlugin({minChunkSize: 10000}),
 		new webpack.HotModuleReplacementPlugin(),
 		new webpack.optimize.AggressiveMergingPlugin(),
-		new CompressionPlugin({
-			asset: "[path].gz[query]",
-			algorithm: "gzip",
-			test: /\.js$|\.html$/,
-			threshold: 10240,
-			minRatio: 0.8
-		}),
 		new webpack.ProvidePlugin({
 
 		})
