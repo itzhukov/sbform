@@ -10,6 +10,7 @@ export default class Form extends React.Component {
 			expToYear: '',
 			userName: '',
 			CCV: '',
+			CCV: '',
 			isErrorForm: false,
 			errors: []
 		}
@@ -69,10 +70,24 @@ export default class Form extends React.Component {
 					return false;
 				}
 				break;
-			case 'expToMonth': break;
-			case 'expToYear': break;
-			case 'userName': break;
-			case 'CCV': break;
+			case 'expToMonth':
+				if (!/^([0-1]|0[1-9]|1[0-2])$/.test(value) || valueLen >= 3) {
+					return false;
+				}
+				break;
+			case 'expToYear':
+				if (!/^([0-9]|[0-9][0-9])$/.test(value) || valueLen >= 3) {
+				return false;
+				}
+				break;
+			case 'userName':
+				value = value.toUpperCase();
+				break;
+			case 'CCV':
+				if (valueLen >= 4) {
+				return false;
+				}
+				break;
 		}
 
 		this.setState({
@@ -81,11 +96,13 @@ export default class Form extends React.Component {
 	}
 
 	render (){
+		let isErrorForm = this.state.isErrorForm;
+
 		return (
-			<form className="Form">
+			<form className={(isErrorForm) ? "Form Form--errors" : "Form"}>
 				<div className="Form-header">Пожалуйста, введите данные Вашей банковской карты.</div>
 				{
-					(this.state.isErrorForm)
+					(isErrorForm)
 					?
 						<div className="Form-errors">
 							<div className="Form-error">Ошибка! Возможно:</div>
@@ -172,7 +189,11 @@ export default class Form extends React.Component {
 							className="Form-input Form-input--ccv"/>
 
 						<div className="Form-hint">Три цифры с обратной стороны карты</div>
-						<button type="button" className="Form-button App-button App-button--blue" onClick={this.validateForm.bind(this)}>
+
+						<button
+							type="button"
+							className="Form-button App-button App-button--blue"
+							onClick={this.validateForm.bind(this)}>
 							Подтвердить
 						</button>
 					</div>
