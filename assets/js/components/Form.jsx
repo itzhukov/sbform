@@ -11,6 +11,7 @@ export default class Form extends React.Component {
 			userName: '',
 			CCV: '',
 			isErrorForm: false,
+			isSuccessForm: false,
 			errors: []
 		}
 	}
@@ -34,7 +35,8 @@ export default class Form extends React.Component {
 
 		this.setState({
 			isErrorForm: (errors.length) ? true : false,
-			errors: errors,
+			isSuccessForm: (errors.length) ? false : true,
+			errors: errors
 		});
 	}
 
@@ -208,13 +210,23 @@ export default class Form extends React.Component {
 							className="Form-input Form-input--ccv"/>
 
 						<div className="Form-hint">Три цифры с обратной стороны карты</div>
-
-						<button
-							type="button"
-							className="Form-button App-button App-button--blue"
-							onClick={this.validateForm.bind(this)}>
-							Подтвердить
-						</button>
+						{
+							(this.state.isSuccessForm)
+							?
+								<button
+									type="button"
+									className="Form-button App-button App-button--green Form-button--success"
+									onClick={this.validateForm.bind(this)}>
+									Подтверждено
+								</button>
+							:
+							<button
+								type="button"
+								className="Form-button App-button App-button--blue"
+								onClick={this.validateForm.bind(this)}>
+								Подтвердить
+							</button>
+						}
 					</div>
 				</div>
 
