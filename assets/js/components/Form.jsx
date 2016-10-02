@@ -70,12 +70,12 @@ export default class Form extends React.Component {
 				}
 				break;
 			case 'expToMonth':
-				if (!/^([0-1]|0[1-9]|1[0-2])$/.test(value) || valueLen >= 3) {
+				if (!/^([0-1]|0[1-9]|1[0-2]){0,2}$/.test(value) || valueLen >= 3) {
 					return false;
 				}
 				break;
 			case 'expToYear':
-				if (!/^([0-9]|[0-9][0-9])$/.test(value) || valueLen >= 3) {
+				if (!/^([0-9]|[0-9][0-9]){0,2}$/.test(value) || valueLen >= 3) {
 				return false;
 				}
 				break;
