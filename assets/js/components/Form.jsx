@@ -42,7 +42,7 @@ export default class Form extends React.Component {
 	actionValidateCardNumber() {
 		let cardNumber = this.state.cardNumber;
 
-		if (/[^0-9-\s]+/.test(cardNumber) || !cardNumber.length) return false;
+		if (/[^0-9-\s]+/.test(cardNumber) || cardNumber.length < 16) return false;
 
 		var nCheck = 0, nDigit = 0, bEven = false;
 		cardNumber = cardNumber.replace(/\D/g, "");
@@ -156,7 +156,7 @@ export default class Form extends React.Component {
 					
 					<div className="Form-col">
 						<input
-							type="number"
+							type="text"
 							id="expToMonth"
 							name="expToMonth"
 							placeholder="MM"
@@ -167,7 +167,7 @@ export default class Form extends React.Component {
 						{<span className="Form-date-divider">/</span>}
 
 						<input
-							type="number"
+							type="text"
 							id="expToYear"
 							name="expToYear"
 							placeholder="YY"
