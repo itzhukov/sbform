@@ -32,7 +32,10 @@ export default class Form extends React.Component {
 			isErrorForm: (errors.length) ? true : false,
 			errors: errors,
 		});
+	}
 
+	componentWillReceiveProps(nextProps) {
+		console.log('-> componentWillReceiveProps', nextProps);
 	}
 
 	// Luhn Algorithm
@@ -84,7 +87,7 @@ export default class Form extends React.Component {
 				value = value.toUpperCase();
 				break;
 			case 'CCV':
-				if (valueLen >= 4) {
+				if (!/^([0-9]{0,3})$/.test(value) || valueLen >= 4) {
 				return false;
 				}
 				break;
