@@ -1,0 +1,100 @@
+.root{
+	display: none;
+}
+
+.root__open{
+	display: block;
+}
+
+.bg{
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 1040;
+	background-color: #767676;
+	animation-fill-mode: forwards;
+	animation-duration: 0.4s;
+	animation-name: slowFade;
+	animation-timing-function: cubic-bezier(0.6,0,0.4,1);
+}
+
+.container{
+	z-index: 1050;
+	position: fixed;
+	transform: translate3d(-50%, -50%, 0);
+	top: 50%;
+	left: 50%;
+	animation-fill-mode: forwards;
+	animation-duration: 0.4s;
+	animation-name: slowFade;
+	animation-timing-function: cubic-bezier(0.6,0,0.4,1);
+}
+
+.inner{
+	position: relative;
+	min-width: 462px;
+	border-radius: 5px;
+	background: #fff;
+	font-size: 17px;
+	animation-fill-mode: forwards;
+	animation-duration: 0.4s;
+	animation-name: slowScale;
+	animation-timing-function: cubic-bezier(0.6,0,0.4,1);
+}
+
+.header{
+	background: #79bf62;
+	color: #fff;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	padding: 18px 21px 15px 21px;
+	letter-spacing: 0.02em;
+}
+
+.body{
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+	padding: 20px;
+	font-size: 14px;
+	background: #fff;
+	color: #747474;
+	font-family: Roboto;
+}
+
+.close{
+	position: absolute;
+	top: 14px;
+	right: 18px;
+	width: 26px;
+	height: 25px;
+	cursor: pointer;
+	transition: all 250ms ease-out;
+	background: url(../img/close.png) 6px 6px no-repeat;
+}
+
+.close:hover{
+		transform: rotate(180deg);
+}
+
+@-webkit-keyframes slowFade{
+	0%{
+		opacity: 0;
+	}
+
+	100%{
+		opacity:  0.9;
+	}
+}
+
+@-webkit-keyframes slowScale{
+	0%{
+		opacity: 0;
+		transform: scale3d(0, 0, 1);
+	}
+	100%{
+		opacity:  1;
+		transform: scale3d(1, 1, 1);
+	}
+}

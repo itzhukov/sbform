@@ -1,0 +1,122 @@
+.root{
+
+}
+
+.root__errors{
+	composes: root;
+}
+
+.input{
+	border-color: red;
+}
+
+.header{
+	border-bottom: 1px solid #f4f5f4;
+	padding-bottom: 17px;
+	margin-bottom: 17px;
+}
+
+.errors{
+	background: #fffbed;
+	padding: 8px 18px;
+	color: #dd645e;
+	line-height: 18px;
+	font-size: 13px;
+	font-weight: 600;
+	letter-spacing: 0.01em;
+	margin-bottom: 20px;
+}
+
+.col{
+	display: inline-block;
+	position: relative;
+}
+
+.group{
+	display: block;
+	margin-bottom: 25px;
+	position: relative;
+}
+
+.label{
+	display: inline-block;
+	width: 125px;
+	vertical-align: top;
+	line-height: 30px;
+}
+
+.date_divider{
+	margin: 0 6px;
+	color: #9c9c9c;
+}
+
+.input{
+	display: inline-block;
+	line-height: 30px;
+	border: 1px solid #e7e7e7;
+	border-radius: 3px;
+	padding: 0 10px;
+	height: 32px;
+	color: #959595;
+}
+
+.visa{
+	position: absolute;
+	right: -46px;
+	top: 4px;
+}
+
+.input__cardNumber{
+	composes: input;
+	width: 200px;
+}
+
+.input__ccv{
+	composes: input;
+	width: 50px;
+}
+
+.input__month,
+.input__year{
+	composes: input;
+	composes: input;
+	width: 50px;
+}
+
+.input__month::-webkit-outer-spin-button,
+.input__year::-webkit-outer-spin-button,
+.input__month::-webkit-inner-spin-button,
+.input__year::-webkit-inner-spin-button{
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	-ms-appearance: none;
+}
+
+.hint{
+	color: #bababa;
+	font-size: 13px;
+	margin-top: 12px;
+}
+
+.button{
+	composes: button__blue from "./styles.css";
+	margin-top: 25px;
+	width: 142px;
+}
+
+.button_success{
+	composes: button__green from "./styles.css";
+	margin-top: 25px;
+	width: 142px;
+	padding: 8px 5px 8px 25px;
+}
+
+.button_success:before{
+	position: absolute;
+	content: '';
+	background: url(../img/success.png) 6px 6px no-repeat;
+	width: 23px;
+	height: 23px;
+	left: 6px;
+	top: 1px;
+}

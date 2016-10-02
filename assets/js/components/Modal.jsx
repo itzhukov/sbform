@@ -1,5 +1,6 @@
 import ReactDOM from "react-dom"
 import React from "react"
+import styles from 'modal';
 
 export default class Modal extends React.Component {
 	constructor() {
@@ -8,17 +9,17 @@ export default class Modal extends React.Component {
 
 	render (){
 		return (
-			<div className={ (this.props.isVisible == true) ? 'Modal  Modal--open' : 'Modal' }>
-				<div className="ModalBg" onClick={this.props.toggleModal.bind(this)} />
+			<div className={ (this.props.isVisible == true) ? styles.root__open : styles.root }>
+				<div className={styles.bg} onClick={this.props.toggleModal.bind(this)} />
 
-				<div className="ModalContainer">
-					<div className="ModalInner">
-					<div className="Modal-header">
-						<span className="Modal-header-name">{this.props.header}</span>
-						<div className="Modal-close" onClick={this.props.toggleModal.bind(this)} />
+				<div className={styles.container}>
+					<div className={styles.inner}>
+					<div className={styles.header}>
+						<span>{this.props.header}</span>
+						<div className={styles.close} onClick={this.props.toggleModal.bind(this)} />
 					</div>
 
-					<div className="Modal-body">
+					<div className={styles.body} >
 						{this.props.children}
 					</div>
 					</div>

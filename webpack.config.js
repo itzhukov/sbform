@@ -1,8 +1,9 @@
 var webpack = require('webpack');
 var path = require('path');
 var colors = require('colors');
-var oldperc = 0;
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
+var oldperc = 0;
 var config = {
 	cache: true,
 	// devtool: 'eval', //  Each module is executed with eval and //@ sourceURL.
@@ -20,25 +21,20 @@ var config = {
 	output: {
 		path: path.join(__dirname, 'public/js/'),
 		filename: '[name].js',
-		chunkFilename: path.join(__dirname, 'public/js/chunks/[chunkhash][name].js'),
+		chunkFilename: '[name].[chunkhash].js',
 		publicPath: path.join(__dirname, 'public/js/chunks/[hash]')
 	},
 	resolve: {
 		unsafeCache: true,
-		extensions: ['', '.js', '.jsx'],
+		extensions: ['', '.js', '.jsx', '.css'],
 		root: [
 			path.resolve(__dirname, 'assets/'),
 		],
 		alias: {
-			'Form': 'js/modules/Form'
+			'styles': 'css/styles',
+			'modal': 'css/modal',
+			'form': 'css/form'
 		}
-	},
-	externals: {
-		ckeditor: 'CKEDITOR',
-		ymaps: 'ymaps'
-	},
-	amd: {
-		jQuery: true
 	},
 	noParse: [
 		/(node_modules|bower_components)/,
@@ -47,11 +43,16 @@ var config = {
 	],
 	module: {
 		loaders: [
-			{ test: /\.gif$/, loader: 'url-loader?limit=300&name=[name].[ext]'},
-			{ test: /\.png$/, loader: 'url-loader?limit=300&name=[name].[ext]'},
+			{
+				test: /\.css$/,
+				loader: ExtractTextPlugin.extract(
+					'style-loader',
+					'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader'
+				)
+			},
+			{ test: /\.(png|jpg|gif)$/, loader: 'url-loader?limit=10000' },
 			{ test: /\.html$/, loader: 'html!posthtml' },
 			{ test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "url-loader?limit=10000&minetype=application/font-woff" },
-			{ test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "file-loader" },
 			{
 				exclude: [
 					/(node_modules|bower_components)/,
@@ -78,12 +79,17 @@ var config = {
 			}
 		],
 	},
+	postcss: [
+		require('autoprefixer-core'),
+		require('postcss-color-rebeccapurple')
+	],
 	posthtml: function () {
 		return {
 			defaults: [ PostHTML ]
 		}
 	},
 	plugins: [
+		new ExtractTextPlugin('styles.css', { allChunks: true }),
 		new webpack.optimize.OccurrenceOrderPlugin(),
 		new webpack.optimize.DedupePlugin(),
 		new webpack.NoErrorsPlugin(),

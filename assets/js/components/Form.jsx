@@ -1,5 +1,6 @@
 import ReactDOM from "react-dom"
 import React from "react"
+import styles from 'form';
 
 export default class Form extends React.Component {
 	constructor() {
@@ -11,6 +12,7 @@ export default class Form extends React.Component {
 			userName: '',
 			CCV: '',
 			isErrorForm: false,
+			isSuccessForm: false,
 			errors: []
 		}
 	}
@@ -34,6 +36,7 @@ export default class Form extends React.Component {
 
 		this.setState({
 			isErrorForm: (errors.length) ? true : false,
+			isSuccessForm: (errors.length) ? false : true,
 			errors: errors,
 		});
 	}
@@ -118,26 +121,26 @@ export default class Form extends React.Component {
 		let isErrorForm = this.state.isErrorForm;
 
 		return (
-			<form className={(isErrorForm) ? "Form Form--errors" : "Form"}>
-				<div className="Form-header">Пожалуйста, введите данные Вашей банковской карты.</div>
+			<form className={(isErrorForm) ? styles.root__errors: styles.root}>
+				<div className={styles.header}>Пожалуйста, введите данные Вашей банковской карты.</div>
 				{
 					(isErrorForm)
 					?
-						<div className="Form-errors">
-							<div className="Form-error">Ошибка! Возможно:</div>
+						<div className={styles.errors}>
+							<div className={styles.error}>Ошибка! Возможно:</div>
 							{
 								this.state.errors.map( (item, i) => {
-									return <div key={i} className="Form-error">{item}</div>
+									return <div key={i} className={styles.error}>{item}</div>
 								})
 							}
 						</div>
 					: null
 				}
 
-				<div className="Form-group">
-					<label className="Form-label" htmlFor="cardNumber">Номер карты</label>
+				<div className={styles.group}>
+					<label className={styles.label} htmlFor="cardNumber">Номер карты</label>
 					
-					<div className="Form-col">
+					<div className={styles.col}>
 						<input
 							type="text"
 							id="cardNumber"
@@ -145,16 +148,16 @@ export default class Form extends React.Component {
 							placeholder="1111-2222-3333-4444"
 							onChange={this.actionSetInputValue.bind(this)}
 							value={this.state.cardNumber}
-							className="Form-input Form-input--cardNumber"/>
+							className={styles.input__cardNumber}/>
 
-						<img src="./img/visa.png" width="37" alt="" className="Form-visa"/>
+						<img src="./img/visa.png" width="37" alt="" className={styles.visa}/>
 					</div>
 				</div>
 
-				<div className="Form-group">
-					<label className="Form-label" htmlFor="expToMonth">Действует до</label>
+				<div className={styles.group}>
+					<label className={styles.label} htmlFor="expToMonth">Действует до</label>
 					
-					<div className="Form-col">
+					<div className={styles.col}>
 						<input
 							type="text"
 							id="expToMonth"
@@ -162,9 +165,9 @@ export default class Form extends React.Component {
 							placeholder="MM"
 							onChange={this.actionSetInputValue.bind(this)}
 							value={this.state.expToMonth}
-							className="Form-input Form-input--month"/>
+							className={styles.input__month}/>
 
-						{<span className="Form-date-divider">/</span>}
+						{<span className={styles.date_divider}>/</span>}
 
 						<input
 							type="text"
@@ -173,14 +176,14 @@ export default class Form extends React.Component {
 							placeholder="YY"
 							onChange={this.actionSetInputValue.bind(this)}
 							value={this.state.expToYear}
-							className="Form-input Form-input--year"/>
+							className={styles.input__year}/>
 					</div>
 				</div>
 
-				<div className="Form-group">
-					<label className="Form-label" htmlFor="userName">Имя и фамилия</label>
+				<div className={styles.group}>
+					<label className={styles.label} htmlFor="userName">Имя и фамилия</label>
 
-					<div className="Form-col">
+					<div className={styles.col}>
 						<input
 							type="text"
 							id="userName"
@@ -188,16 +191,16 @@ export default class Form extends React.Component {
 							placeholder="IVAN IVANOV"
 							onChange={this.actionSetInputValue.bind(this)}
 							value={this.state.userName}
-							className="Form-input"/>
+							className={styles.input}/>
 
-						<div className="Form-hint">Латинские буквы, как на карте</div>
+						<div className={styles.hint}>Латинские буквы, как на карте</div>
 					</div>
 				</div>
 
-				<div className="Form-group">
-					<label className="Form-label" htmlFor="CCV">Код CCV</label>
+				<div className={styles.group}>
+					<label className={styles.label} htmlFor="CCV">Код CCV</label>
 					
-					<div className="Form-col">
+					<div className={styles.col}>
 						<input
 							type="password"
 							id="CCV"
@@ -205,16 +208,26 @@ export default class Form extends React.Component {
 							placeholder="***"
 							onChange={this.actionSetInputValue.bind(this)}
 							value={this.state.CCV}
-							className="Form-input Form-input--ccv"/>
+							className={styles.input__ccv}/>
 
-						<div className="Form-hint">Три цифры с обратной стороны карты</div>
-
-						<button
-							type="button"
-							className="Form-button App-button App-button--blue"
-							onClick={this.validateForm.bind(this)}>
-							Подтвердить
-						</button>
+						<div className={styles.hint}>Три цифры с обратной стороны карты</div>
+						{
+							(this.state.isSuccessForm)
+							?
+								<button
+									type="button"
+									className={styles.button_success}
+									onClick={this.validateForm.bind(this)}>
+									Подтверждено
+								</button>
+							:
+							<button
+								type="button"
+								className={styles.button}
+								onClick={this.validateForm.bind(this)}>
+								Подтвердить
+							</button>
+						}
 					</div>
 				</div>
 

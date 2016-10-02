@@ -1,11 +1,13 @@
-import React from "react"
-import ReactDOM from "react-dom"
-import Modal from "../components/Modal"
-import Form from "../components/Form"
+import React from "react";
+import ReactDOM from "react-dom";
+import CSSModules from 'react-css-modules';
+import Modal from "../components/Modal";
+import Form from "../components/Form";
+import styles from 'styles';
 
-export default class App extends React.Component {
-	constructor() {
-		super();
+export default class extends React.Component {
+	constructor(props) {
+		super(props);
 		this.state = {
 			isVisible: false
 		}
@@ -19,8 +21,8 @@ export default class App extends React.Component {
 
 	render (){
 		return (
-			<div className="App">
-				<button className="App-button App-button--green App-button-openModal" onClick={this.toggleModal.bind(this)}>
+			<div className={styles.root}>
+				<button className={styles.button__openModal} onClick={this.toggleModal.bind(this)}>
 					Открыть модальное окно
 				</button>
 

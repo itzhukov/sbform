@@ -26,28 +26,14 @@ gulp.task('webpack', function() {
 		.pipe(gulp.dest('./public/js/'))
 });
 
-// Сборка sass
-gulp.task('sass', function() {
-	console.log('----------- Start SASSS -----------'.bold.green.bgBlack);
-	gulp.src('./assets/sass/*.sass')
-		.pipe( sass({outputStyle: 'compressed'})
-		.on('error', sass.logError) )
-		.pipe(gulp.dest('./public/css'))
-		.on('error', exceptionLog)
-		.on('end', function() {
-			console.log('--------- Finished SASSS ----------'.bold.green.bgBlack.inverse);
-		});
-	
-});
-
 // del
 gulp.task('del-build', function() {
 	console.log('--------- Delete old build ---------'.bold.yellow);
 	del([
 		'public/js/build.js',
+		'public/js/build.js.gz',
 		'public/js/build.js.map',
-		'public/css/style.css',
-		'public/css/style.css.map'
+		'public/js/styles.css'
 	])
 	.then(function (paths) {
 		console.log('---- Finished Delete old build ----'.bold.green.bgBlack.inverse);
@@ -56,7 +42,6 @@ gulp.task('del-build', function() {
 
 // watcher
 gulp.task('default', function () {
-	runSequence('del-build', ['webpack', 'sass'])
-	gulp.watch(['./assets/js/**/*.js', './assets/js/**/*.jsx', './webpack.config.js'], ['webpack']);
-	gulp.watch('./assets/sass/**/*.sass', ['sass']);
+	runSequence('del-build', ['webpack'])
+	gulp.watch(['./assets/css/**/*.css', './assets/js/**/*.js', './assets/js/**/*.jsx', './webpack.config.js'], ['webpack']);
 });

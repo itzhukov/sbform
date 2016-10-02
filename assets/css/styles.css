@@ -1,0 +1,45 @@
+.root{
+	font-family: "PT Sans";
+}
+
+.button{
+	position: relative;
+	padding: 8px 5px;
+	border-radius: 3px;
+	outline: none;
+	border: none;
+	text-align: center;
+	font-size: 13px;
+	background: none;
+	min-width: 140px;
+	letter-spacing: 0.02em;
+	cursor: pointer;
+	transition: background 150ms ease-out;
+}
+
+.button__blue{
+	composes: button;
+	background: #4786cd;
+	color: #fff;
+}
+
+.button__blue:hover{
+	background: #3786de;
+}
+
+.button__green{
+	composes: button;
+	background: #79bf62;
+	color: #fff;
+}
+
+.button__green:hover{
+	background: #6ed04d;
+}
+
+.button__openModal{
+	composes: button__green;
+	margin: 0 auto;
+	display: block;
+	width: 230px;
+}
