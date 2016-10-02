@@ -10,7 +10,6 @@ export default class Form extends React.Component {
 			expToYear: '',
 			userName: '',
 			CCV: '',
-			CCV: '',
 			isErrorForm: false,
 			errors: []
 		}
@@ -22,7 +21,12 @@ export default class Form extends React.Component {
 
 		let errors = [];
 
-		if ( !this.actionValidateCardNumber() ) {
+		if (
+			!this.actionValidateCardNumber() ||
+			!this.actionValidateDate() ||
+			!this.actionValidateName() ||
+			!this.actionValidateCCV()
+		) {
 			errors.push('— Вы ошиблись в реквизитах карты');
 			errors.push('— На карте нулевой балланс или она заблокирована.');
 			errors.push('Проверьте реквизиты или укажите данные другой карты.');
@@ -56,6 +60,22 @@ export default class Form extends React.Component {
 		}
 
 		return (nCheck % 10) == 0;
+	}
+
+	actionValidateName() {
+		let userName = this.state.userName;
+		return (userName.length) ? true : false
+	}
+
+	actionValidateDate() {
+		let expToMonth = this.state.expToMonth;
+		let expToYear = this.state.expToYear;
+		return (expToMonth.length == 2 && expToYear.length == 2 ) ? true : false
+	}
+
+	actionValidateCCV() {
+		let CCV = this.state.CCV;
+		return (CCV.length == 3) ? true : false
 	}
 
 	actionSetInputValue(event) {
