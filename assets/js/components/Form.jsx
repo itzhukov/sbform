@@ -34,10 +34,6 @@ export default class Form extends React.Component {
 		});
 	}
 
-	componentWillReceiveProps(nextProps) {
-		console.log('-> componentWillReceiveProps', nextProps);
-	}
-
 	// Luhn Algorithm
 	actionValidateCardNumber() {
 		let cardNumber = this.state.cardNumber;
